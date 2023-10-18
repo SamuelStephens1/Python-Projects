@@ -1,0 +1,82 @@
+#The following is a decryption program based on a Ceasar Cipher
+var = "frqjudwv#|rx#vroyhg#lw$"
+dict1 = []
+
+for x in var:
+  dict1.append(ord(x))
+
+checkCount = 1
+while checkCount <= 10:
+    converted_chars = [chr(x + checkCount) for x in dict1]
+    print("This is test",checkCount,''.join(converted_chars))
+    checkCount += 1
+print("\n\n\n")
+checkCount = 1
+while checkCount <= 10:
+    converted_chars = [chr(x - checkCount) for x in dict1]
+    print("This is negative test",checkCount,''.join(converted_chars))
+    checkCount += 1
+
+#The following is a creation of a menu with hot keys for a cashier at a local donut shop
+totalTracker = 0
+ralphDonutMenu = {"Bread Twist": 1.25, "Glazed Donut": 0.85, "Blueberry Cake Donut": 1.15, "Donut Holes": 2.00}
+
+while True:
+    startQ = True  
+    donutChoices = {}
+
+    while startQ:  
+        tax = 0.0925
+        donutName = input("\nPlease enter the donut code (your options are: BT, GD, BCD, DH, \nor enter F to finish order): ").upper()
+        if donutName == "BT":
+            userInput = "Bread Twist"
+            quantity = int(input("\nPlease enter the quantity: "))
+        elif donutName == "GD":
+            userInput = "Glazed Donut"
+            quantity = int(input("\nPlease enter the quantity: "))
+        elif donutName == "BCD":
+            userInput = "Blueberry Cake Donut"
+            quantity = int(input("\nPlease enter the quantity: "))
+        elif donutName == "DH":
+            userInput = "Donut Holes"
+            quantity = int(input("\nPlease enter the quantity: "))
+        elif donutName == "F":
+          print("\n")
+          break
+        else:
+            print("Invalid donut code. Please enter a valid code.")
+            continue
+        donutChoices[userInput] = ralphDonutMenu[userInput] * quantity
+        totalTracker += donutChoices[userInput]
+    taxTotal = round(totalTracker * tax,2)
+    grandTotal = round(totalTracker + taxTotal, 2)
+    for key, value in donutChoices.items():
+        print("Item:",key, "    Quantity:", int(value/ralphDonutMenu[key]))
+        print("SubTotal:",value)
+    print("Tax:      ",taxTotal)
+    print("\n\nTotal Due: \033[38;2;225;0;0m",grandTotal,"\033[0m")
+    cont = input("\nPlease press enter to continue")
+    donutChoices = {}
+    totalTracker = 0
+
+#The following is a program that takes the name of employees in sales, has them add the number of sales they had, records those names and sales in a dictionary then prints.
+employeeSales = {}
+count = 0
+startQ = "yes"
+while startQ.lower() == "yes":
+    employeeName = input("\nPlease enter your first name: ") 
+    if employeeName in employeeSales:
+        print("\nThat name already exists. Please enter a different name.")
+        continue   
+    employeeCount = float(input("\nPlease enter your sales count: "))
+    print("\nYour name is " + employeeName + " and you sold " + str(employeeCount) + " units, is that correct?\n")
+    startQ2 = input("Type 'yes' to confirm or 'no' to restart: ")    
+    if startQ2.lower() == "yes":
+        employeeSales[employeeName] = employeeCount
+        count += 1
+        startQ = input("\nIs there another employee to enter? ")
+    else:
+        startQ = input("\nDo you want to restart for the same employee? (Type 'yes' or 'no'): ")
+print("\nThank you, you added", count, "employee(s).")
+print(employeeSales)
+print("Total Sales: "+str(sum(employeeSales.values())))
